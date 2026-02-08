@@ -78,6 +78,7 @@ export interface FreeWorkout {
   title: string;
   description: string;
   videoUrl: string;
+  thumbnailUrl?: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   tags: string[];
   duration: number;

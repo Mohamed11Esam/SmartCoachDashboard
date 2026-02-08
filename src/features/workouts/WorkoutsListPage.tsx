@@ -95,6 +95,12 @@ export function WorkoutsListPage() {
                     className="w-full h-full object-cover"
                     muted
                   />
+                ) : workout.thumbnailUrl ? (
+                  <img
+                    src={workout.thumbnailUrl}
+                    alt={workout.title}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <Dumbbell className="w-10 h-10 text-text-muted" />
