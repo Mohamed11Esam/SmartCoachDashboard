@@ -91,6 +91,7 @@ export interface CreateWorkoutRequest {
   title: string;
   description: string;
   videoUrl?: string;
+  thumbnailUrl?: string;
   difficulty: string;
   tags?: string[];
   duration: number;

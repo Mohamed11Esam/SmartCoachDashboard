@@ -32,6 +32,7 @@ export function AddWorkoutPage() {
   const navigate = useNavigate();
   const { upload, uploading } = useMediaUpload();
   const [videoUrl, setVideoUrl] = useState('');
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   const {
@@ -42,10 +43,17 @@ export function AddWorkoutPage() {
     resolver: zodResolver(schema) as Resolver<WorkoutForm>,
   });
 
-  const handleFileSelected = async (files: File[]) => {
+  const handleVideoSelected = async (files: File[]) => {
     if (files[0]) {
       const url = await upload(files[0]);
       if (url) setVideoUrl(url);
+    }
+  };
+
+  const handleThumbnailSelected = async (files: File[]) => {
+    if (files[0]) {
+      const url = await upload(files[0]);
+      if (url) setThumbnailUrl(url);
     }
   };
 
@@ -66,6 +74,7 @@ export function AddWorkoutPage() {
         title: data.title,
         description,
         videoUrl: videoUrl || undefined,
+        thumbnailUrl: thumbnailUrl || undefined,
         difficulty: data.difficulty,
         duration: data.duration,
         calories: data.calories,
@@ -147,15 +156,24 @@ export function AddWorkoutPage() {
 
         <Card>
           <h2 className="text-lg font-semibold text-text-primary mb-4">
-            Video
+            Media
           </h2>
-          <FileUpload
-            label="Workout Video"
-            accept="video/*"
-            onFilesSelected={handleFileSelected}
-            previews={videoUrl ? [videoUrl] : []}
-            onRemovePreview={() => setVideoUrl('')}
-          />
+          <div className="space-y-4">
+            <FileUpload
+              label="Thumbnail Image"
+              accept="image/*"
+              onFilesSelected={handleThumbnailSelected}
+              previews={thumbnailUrl ? [thumbnailUrl] : []}
+              onRemovePreview={() => setThumbnailUrl('')}
+            />
+            <FileUpload
+              label="Workout Video (optional)"
+              accept="video/*"
+              onFilesSelected={handleVideoSelected}
+              previews={videoUrl ? [videoUrl] : []}
+              onRemovePreview={() => setVideoUrl('')}
+            />
+          </div>
           {uploading && (
             <p className="text-sm text-accent mt-2">Uploading...</p>
           )}
